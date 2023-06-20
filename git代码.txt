@@ -1,0 +1,16 @@
+git init 			//建立.git
+git add . 			//将所有添加文件放入暂存区
+git commit -m "描述信息"
+git branch -M main		//选择main分支
+git remote add origin 仓库地址	//连接仓库
+git push -u origin main	//上传文件到仓库的main分支
+git pull 			//获取代码并合并
+git clone			//下载文件到本地
+
+
+https://github.com/ckh020303
+
+git config --global user.name "ckh020303"
+git config --global user.email "1596837933@qq.com"
+ssh-keygen -t rsa -C "1596837933@qq.com"
+C:/User/用户/.ssh
