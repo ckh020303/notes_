@@ -220,6 +220,32 @@ class Dog : public Animal {
     // bark() 函数
 };
 ```
+### 子类继承和调用父类的构造函数
+- 子类可以继承父类所有的成员变量和成员方法，但**不能继承其构造方法**。
+- 在创建子类对象时，为了初始化从父类继承来的数据成员，系统需要**调用其父类的构造函数**。
+- 父类构造函数中的`this`指向**当前子类对象**。
+
+**自行调用**父类的**无参构造函数**，若父类是**有参构造函数**，则需要**显性调用**。
+```c++
+class animal  
+　{  
+　public:  
+　　　animal(int height, int weight)   //有且仅有 有参参数，必须显性调用
+　　　{  
+　　　　　cout<<"animal construct"<<endl;  
+　　　}  
+　　　…  
+　};  
+　class fish:public animal  
+　{  
+　public:  
+　　　fish():animal(400,300)           //显性S调用
+　　　{  
+　　　　　cout<<"fish construct"<<endl;  
+　　　}  
+　　　…  
+　};  
+```
 
 ### 虚函数
 - 定义一个函数为虚函数，不代表函数为不被实现的函数。
@@ -251,3 +277,43 @@ int main(void)
     return 0;
 }
 ```
+
+## C++ STL
+C++ STL（标准模板库）是一套功能强大的 C++ 模板类，提供了通用的模板类和函数，这些模板类和函数可以实现多种流行和常用的算法和数据结构，如向量、链表、队列、栈。
+C++ 标准模板库的核心包括以下三个组件：
+- 容器：容器是用来管理**某一类对象的集合**。C++ 提供了各种不同类型的容器，比如 deque、list、vector、map 等。
+- 算法：算法作用于容器。它们提供了执行各种操作的方式，包括对容器内容执行初始化、排序、搜索和转换等操作。
+- 迭代器：迭代器用于遍历对象集合的元素。这些集合可能是容器，也可能是容器的子集。
+
+```c++
+#include <iostream>
+#include <list>
+using namespace std;
+
+class A{                                                 //父类
+public:
+    virtual void print()=0;
+};
+class B: public A{                                       //子类继承父类
+public:
+    void print(){cout<<"B::print()"<<endl;}
+};
+
+int main(int argc, char* argv[]){
+    B *pb = new B;                                       //创建子类对象
+    list<A*> temp;                                       //创建链表
+    list<A*>::iterator iter;                             //创建链表句柄（迭代器）
+
+    temp.push_back(pb);                                  //添加子类对象到链表末尾
+
+    for(iter=temp.begin(); iter!=temp.end(); ++iter){    //遍历链表
+        (*iter)->print();
+        delete(*iter);
+    }
+
+    return 0;
+}
+```
+
+## C语言调用C++代码
+extern "C" void xxx();
